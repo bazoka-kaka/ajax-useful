@@ -11,6 +11,7 @@
 <center>
 <img src="./assets/ajax_diagram.png" width="200">
 </center>
+basically AJAX allows us to do request to the server asynchronously in the background without intervering (reloading) the entire web page done using XMLHttpRequest
 
 ## XmlHTTPRequest (XHR) Object
 
@@ -23,8 +24,8 @@
 ## Libraries and Other Methods
 
 - jQuery -- don't just use this for ajax purposes only
-- Axios -- for http requests (update, delete, etc)
-- SuperAgent -- for http requests (update, delete, etc)
+- Axios -- slim libraries for http requests (update, delete, etc)
+- SuperAgent -- slim libraries for http requests (update, delete, etc)
 - Fetch API -- part of the browser (firefox and chrome only probably)
 - Prototype
 - Node HTTP -- this is nodejs
