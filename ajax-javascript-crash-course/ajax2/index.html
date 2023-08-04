@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX 2 - local JSON</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="button1">Get User</button>
+    <button id="button2">Get Users</button>
+    <br /><br />
+    <h1>user</h1>
+    <div id="user"></div>
+    <h1>users</h1>
+    <div id="users"></div>
+  </body>
+  <script>
+    document.getElementById("button1").addEventListener("click", loadUser);
+    document.getElementById("button2").addEventListener("click", loadUsers);
+
+    function loadUser() {
+      const xhr = new XMLHttpRequest();
+
+      xhr.open("GET", "user.json", true);
+
+      xhr.onload = function () {
+        if (this.status == 200) {
+          const user = JSON.parse(this.responseText);
+
+          let output = "";
+          output += `
+            <ul>
+              <li>${user.id}</li>
+              <li>${user.name}</li>
+              <li>${user.email}</li>
+            </ul>
+          `;
+          document.getElementById("user").innerHTML = output;
+        }
+      };
+
+      xhr.send();
+    }
+
+    function loadUsers() {
+      const xhr = new XMLHttpRequest();
+
+      xhr.open("GET", "users.json", true);
+
+      xhr.onload = function () {
+        if (this.status == 200) {
+          const users = JSON.parse(this.responseText);
+
+          let output = "";
+
+          users.forEach((user) => {
+            output += `
+              <ul>
+                <li>${user.id}</li>
+                <li>${user.name}</li>
+                <li>${user.email}</li>
+              </ul>`;
+          });
+
+          document.getElementById("users").innerHTML = output;
+        }
+      };
+
+      xhr.send();
+    }
+  </script>
+</html>
