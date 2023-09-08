@@ -1,15 +1,19 @@
 <?php
 
+require_once __DIR__ . '/create-captcha.php';
+
 $fullname = '';
 $email = '';
 $password = '';
 $password_confirmation = '';
+$captcha = '';
 
 $errors = [
   'fullname' => '',
   'email' => '',
   'password' => '',
-  'password_confirmation' => ''
+  'password_confirmation' => '',
+  'captcha' => ''
 ];
 
 define("REQUIRED_FIELD_ERROR", "*This field is required");
@@ -17,6 +21,7 @@ define("INVALID_EMAIL_ERROR", "*Email is invalid");
 define("INVALID_STRLEN_ERROR", "*Characters length must be between 4 and 50");
 define("PASSWORD_STRLEN_ERROR", "*Password length must be between 8 and 50");
 define("PASSWORD_CONFIRM_ERROR", "*Password and password confirmation doesn&apos;t match");
+define("INVALID_CAPTCHA_ERROR", "*Captcha is not correct");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $url = post_input('url');
@@ -24,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $email = post_input('email');
   $password = post_input('password');
   $password_confirmation = post_input('password_confirmation');
+  $captcha = post_input("captcha");
 
   if (empty($fullname)) {
     $errors['fullname'] = REQUIRED_FIELD_ERROR;
@@ -51,7 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors['password_confirmation'] = PASSWORD_CONFIRM_ERROR;
   }
 
-  if (empty($errors['fullname']) && empty($errors['email']) && empty($errors['password']) && empty($errors['password_confirmation'])) {
+  if (empty($captcha)) {
+    $errors['captcha'] = REQUIRED_FIELD_ERROR;
+  } else if (strcmp($captcha, $_SESSION['captcha']) !== 0) {
+    $errors['captcha'] = INVALID_CAPTCHA_ERROR;
+  }
+
+  if (empty($errors['fullname']) && empty($errors['email']) && empty($errors['password']) && empty($errors['password_confirmation']) && empty($errors['captcha'])) {
     echo "<div style='background-color: lightgreen; color: white; text-align: center; display: block; padding: 5px'>Success</div>";
 
     // submit to intended form
@@ -102,5 +114,13 @@ function post_input($field)
 <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Please re-enter your password">
 <?php if (!empty($errors['password_confirmation'])) : ?>
   <small><?php echo $errors['password_confirmation']; ?></small>
+<?php endif; ?>
+<div>
+  <img class="captcha" src="<?php echo createCaptcha(); ?>" alt="">
+  <i class="fa-solid fa-rotate-right" style="cursor:pointer; font-size: 1.2rem"></i>
+</div>
+<input type="text" id="captcha" name="captcha" placeholder="Please re-enter the captcha">
+<?php if (!empty($errors['captcha'])) : ?>
+  <small><?php echo $errors['captcha']; ?></small>
 <?php endif; ?>
 <p>Already have an account? <a href="#" class="link">Login into your account</a></p>

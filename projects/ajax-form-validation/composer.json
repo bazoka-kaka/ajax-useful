@@ -1,0 +1,12 @@
+{
+    "name": "bazoka-kaka/ajax-register-validation",
+    "type": "project",
+    "require": {
+        "gregwar/captcha": "^1.2"
+    },
+    "authors": [
+        {
+            "name": "bazoka-kaka"
+        }
+    ]
+}
