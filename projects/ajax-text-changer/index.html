@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- css link -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- jquery cdn -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- ajax jquery script -->
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#btn").click(function () {
+          $("#content").load("text.txt", function () {
+            alert("Text is changed successfully!");
+          });
+        });
+      });
+    </script>
+    <title>AJAX Text Changer</title>
+  </head>
+  <body>
+    <h1 id="content"><span style="color: red">Change this text</span></h1>
+    <button id="btn" type="button">Change the text!</button>
+    <a id="reloadBtn" href="#" onclick="location.reload()">Reload</a>
+  </body>
+</html>
